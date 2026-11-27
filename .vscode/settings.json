@@ -1,8 +1,26 @@
 {
   "editor.inlineSuggest.enabled": false,
+  "chat.agent.enabled": false,
+  "chat.commandCenter.enabled": false,
+  "github.copilot.enable": {
+    "*": false,
+    "plaintext": false,
+    "markdown": false,
+    "javascript": false,
+    "typescript": false,
+    "python": false,
+    "go": false,
+    "java": false,
+    "cpp": false,
+    "c": false,
+    "rust": false
+  },
   "github.copilot.inlineSuggest.enable": false,
   "github.copilot.editor.enableCodeActions": false,
+  "github.copilot.chat.editor.enable": false,
+  "github.copilot.chat.welcomeMessage": "never",
   "github.copilot.advanced": {
-    "inlineSuggestCount": 0
+    "inlineSuggestCount": 0,
+    "authProvider": "none"
   }
 }

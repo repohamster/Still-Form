@@ -1,19 +1,43 @@
 {
-  "name": "Still-Form Challenge (RepoHamster)",
+  "name": "Still-Form (JavaScript • RepoHamster)",
   "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
   "forwardPorts": [
+    3000,
     3001,
     5173
   ],
-  "postCreateCommand": "npm install && (test -f .env || cp .env.example .env) && (chmod 444 .vscode/settings.json .github/copilot-instructions.md 2>/dev/null || true)",
+  "containerEnv": {
+    "PIP_BREAK_SYSTEM_PACKAGES": "1",
+    "PYTHONUNBUFFERED": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "postCreateCommand": "bash -c 'echo \"🐹 [RepoHamster] Initializing language runtime and dependencies...\" && \\\nif command -v npm >/dev/null 2>&1; then\n  if [ -f package.json ]; then\n    echo \"📦 [RepoHamster] Installing Node dependencies from package.json...\"\n    npm install || true\n  fi\n  if [ -f frontend/package.json ]; then\n    echo \"📦 [RepoHamster] Installing frontend dependencies from frontend/package.json...\"\n    (cd frontend && npm install) || true\n  fi\n  if [ -f client/package.json ]; then\n    echo \"📦 [RepoHamster] Installing client dependencies from client/package.json...\"\n    (cd client && npm install) || true\n  fi\nfi && \\\nfor env_src in .env.example backend/.env.example frontend/.env.example server/.env.example client/.env.example; do\n  env_dest=\"${env_src%.example}\"\n  if [ -f \"$env_src\" ] && [ ! -f \"$env_dest\" ]; then\n    echo \"⚙️ [RepoHamster] Initializing $env_dest from $env_src...\"\n    cp \"$env_src\" \"$env_dest\"\n  fi\ndone && \\\n(sudo chown -R root:root .vscode 2>/dev/null || true) && (chmod 444 .vscode/settings.json .github/copilot-instructions.md .cursorrules .windsurfrules CLAUDE.md 2>/dev/null || true) && \\\necho \"🚀 [RepoHamster] Workspace is ready! Happy debugging.\"'",
   "customizations": {
     "vscode": {
       "settings": {
         "editor.inlineSuggest.enabled": false,
+        "chat.agent.enabled": false,
+        "chat.commandCenter.enabled": false,
+        "github.copilot.enable": {
+          "*": false,
+          "plaintext": false,
+          "markdown": false,
+          "javascript": false,
+          "typescript": false,
+          "python": false,
+          "go": false,
+          "java": false,
+          "cpp": false,
+          "c": false,
+          "rust": false
+        },
         "github.copilot.inlineSuggest.enable": false,
         "github.copilot.editor.enableCodeActions": false,
+        "github.copilot.chat.editor.enable": false,
+        "github.copilot.chat.welcomeMessage": "never",
         "github.copilot.advanced": {
-          "inlineSuggestCount": 0
+          "inlineSuggestCount": 0,
+          "authProvider": "none"
         }
       },
       "extensions": [
